@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-init-method="init"
+        xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:util="http://www.springframework.org/schema/util"
+        xmlns:jee="http://www.springframework.org/schema/jee"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:oxm="http://www.springframework.org/schema/oxm"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+        http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm.xsd">
+
+                
+        <jee:jndi-lookup id="dataSource" jndi-name="jdbc/gpxCloneDB"/>
+        <bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+            <property name="driverClassName" value="org.postgresql.Driver"/>
+            <property name="url" value="jdbc:postgresql://localhost:5432/gpxCloneDB"/>
+            <property name="username" value="postgres"/>
+            <property name="password" value="232629"/>
+        </bean>
+        
+        <bean id="hbSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+            <property name="dataSource" ref="myDataSource"/>
+            <property name="packagesToScan" value="net.somewhere.gpxclone.entities"/>
+            <property name="hibernateProperties">
+                <props>
+                    <prop key="hibernate.dialect">org.hibernate.spatial.dialect.postgis.PostgisDialect</prop>
+                    <prop key="hibernate.show_sql">true</prop>
+                    <prop key="hibernate.format_sql">true</prop>
+                </props>
+            </property>
+        </bean>
+       
+        <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+            <property name="sessionFactory" ref="hbSessionFactory"/>
+        </bean>
+              
+        <tx:annotation-driven/>
+        
+        <!-- Email support -->
+        <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+            <property name="host" value="${mail.server.host}" />
+            <property name="port" value="${mail.server.port}" />
+            <property name="protocol" value="${mail.server.protocol}" />
+            <property name="username" value="${mail.server.username}" />
+            <property name="password" value="${mail.server.password}" />
+            <property name="javaMailProperties">
+                <util:properties location="classpath:javamail.properties" />
+            </property>
+        </bean>
+        
+        <oxm:jaxb2-marshaller id="GPXmarshaller" contextPath="net.somewhere.gpxclone.utils.gpx11"/>
+        
+        <bean id="userService" class="net.somewhere.gpxclone.services.UserServiceImpl">
+            <property name="userDao">
+                <bean class="net.somewhere.gpxclone.dao.hibernate.HibernateUserDao">
+                    <property name="sessionFactory" ref="hbSessionFactory"/>
+                </bean>
+            </property>
+            <property name="roleDao">
+                <bean class="net.somewhere.gpxclone.dao.hibernate.HibernateRoleDao">
+                    <property name="sessionFactory" ref="hbSessionFactory"/>
+                </bean>
+            </property>
+            <property name="springSecurityEncoder" ref="passwordEncoder"/>
+            <property name="activationLink" value="${activationLinkUrl}"/>
+            <property name="mailSender" ref="javaMailSender"/>
+            <property name="templateEngine" ref="templateEngine"/>
+            <property name="mailMessages" ref="messageSource"/>
+        </bean>
+        
+        <bean id="trailService" class="net.somewhere.gpxclone.services.TrailServiceImpl">
+            <property name="trailDao">
+                <bean class="net.somewhere.gpxclone.dao.hibernate.HibernateTrailDao">
+                    <property name="sessionFactory" ref="hbSessionFactory"/>
+                </bean>
+            </property>
+            <property name="trailTypeDao">
+                <bean class="net.somewhere.gpxclone.dao.hibernate.HibernateTrailTypeDao">
+                    <property name="sessionFactory" ref="hbSessionFactory"/>
+                </bean>
+            </property>
+        </bean>
+        
+        <bean id="proxyService" class="net.somewhere.gpxclone.services.WmsProxyService2">
+            <property name="host" value="localhost"/>
+            <property name="port" value="9090"/>
+            <property name="path" value="/geoserver/gpxClone/wms"/>
+            <property name="layer" value="gpxClone:Tracks"/>
+            <property name="username" value="${geoserver.username}"/>
+            <property name="password" value="${geoserver.password}"/>
+        </bean>
+</beans>

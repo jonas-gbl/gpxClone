@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>gpxClone by Me</title>
+    <link href="../../static/css/styleMap.css" rel="stylesheet" type="text/css" media="screen"
+            th:href="@{/static/css/styleMap.css}"/>
+    <script src="../../static/scripts/jquery-1.9.1.js"
+            th:src="@{/static/scripts/jquery-1.9.1.js}"></script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <div id="logo">
+                <h1><a href="#">gpxClone   </a></h1>
+                <p> a clone of <a href="http://www.gpsies.com">gpsies.com</a></p>
+            </div>
+        </div>
+            <!-- end #header -->
+        <div id="menu">
+            <ul>
+                <li><a href="#">Map</a></li>
+                <li><a href="../members/uploadForm.html" th:href="@{/trails/upload}">Upload Trails</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Links</a></li>
+				
+                <li sec:authorize="!isAuthenticated()" class="userAction">
+                    <a th:href="@{/members/new}" href="../members/memberForm.html">Register</a>
+                </li>
+                <li sec:authorize="!isAuthenticated()" class="userAction">
+                    <a href="../members/memberLogin.html" th:href="@{/members/login}">Log In</a>
+                </li>
+
+
+                <li sec:authorize="isAuthenticated()" class="userAction">
+                    <a href="../home/map.html" th:href="@{/j_spring_security_logout}">Log Out</a>
+                </li>			
+                <li sec:authorize="isAuthenticated()" id="greeting">
+                        <div>Hello, <span sec:authentication="name">John Doe</span></div>
+                </li>
+            </ul>
+        </div>
+            <!-- end #menu -->
+        <div id="page">
+        <div id="page-bgtop">
+        <div id="page-bgbtm">
+            <div id="content">
+                <div class="post">
+                    <h2 class="title"><a href="#">Account Created</a></h2>
+                    <div class="entry">
+                            <p>You account has been created. An activation email was sent to <b><span th:text="${memberForm.user.email}">someone@somewhere.net</span></b>.</p>
+                            <p>Plese follow the instructions provided in the message.</p>
+                            <p>See you soon!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="clear: both;">&nbsp;</div>
+        </div>
+        </div>
+        </div>
+    </div>
+</body>
+</html>

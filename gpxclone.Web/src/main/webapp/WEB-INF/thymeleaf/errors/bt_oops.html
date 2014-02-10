@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<title>gpxClone, from Me</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="description" content=""/>
+		<meta name="author" content=""/>
+
+		<!-- Le styles -->
+		<link href="../../static/css/bt_oops.css" rel="stylesheet" type="text/css"
+			th:href="@{/static/css/bt_oops.css}"/>
+		<link href="../../static/css/body.css" rel="stylesheet" type="text/css"
+				th:href="@{/static/css/body.css}"/>
+		<link href="../../static/bootstrap/css/bootstrap.css" rel="stylesheet"
+			th:href="@{/static/bootstrap/css/bootstrap.css}"/>
+		<link href="../../static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet"
+			th:href="@{/static/bootstrap/css/bootstrap-responsive.css}"/>
+	</head>
+
+	<body>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="brand" href="./home/bt_map.html" th:href="@{/}">gpxClone</a>
+					<div class="nav-collapse collapse">
+						<ul class="nav">
+							<li><a href="./home/bt_map.html">Map</a></li>
+							
+							<li class="dropdown">
+							  <a id="dropTrails" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+									Trails<b class="caret"></b>
+							  </a>
+							  <ul class="dropdown-menu" role="menu" aria-labelledby="dropTrails">
+								<li role="presentation">
+									<a role="menuitem" tabindex="-1" href="../trails/bt_uploadForm.html" th:href="@{/trails/upload}">Upload Trail</a>
+								</li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="#anotherAction">List Trails</a></li>
+							  </ul>
+							</li>
+							
+							<li><a href="#contact">Contact</a></li>
+						</ul>
+						
+						
+						<ul class="nav pull-right">
+							<li sec:authorize="isAuthenticated()" id="greeting">
+								<p class="navbar-text">Hello, <span sec:authentication="name">John Doe</span></p>
+							</li>
+							<li sec:authorize="!isAuthenticated()" class="userAction">
+								<a th:href="@{/members/new}" href="../members/bt_memberForm.html">Register</a>
+							</li>
+							<li sec:authorize="!isAuthenticated()" class="userAction">
+								<a href="../members/bt_.html" th:href="@{/members/login}">Log In</a>
+							</li>
+
+
+							<li sec:authorize="isAuthenticated()" class="userAction">
+								<a href="../home/bt_map.html" th:href="@{/j_spring_security_logout}">Log Out</a>
+							</li>			
+						</ul>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div id="message_div">
+			<legend class="text-error">Ooops</legend>
+			<p><b>Something went wrong.</b>.</p>
+			<p><span th:remove="all">But we sincerely don't care!</span><span th:text="${problem}"/></p>
+			<p>Please, try again later!</p>
+			<a class="btn btn-primary" href="../home/bt_map.html" th:href="@{/}">OK</a>
+			</div>
+
+
+		</div> <!-- /container -->
+		
+		<!-- Le javascript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="../../static/scripts/jquery-1.9.1.js"
+			th:src="@{/static/scripts/jquery-1.9.1.js}"></script>
+		<script src="../../static/bootstrap/js/bootstrap.js"
+			th:src="@{/static/bootstrap/js/bootstrap.js}"></script>
+	</body>
+</html>

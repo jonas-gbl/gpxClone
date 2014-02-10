@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<title>gpxClone, from Me</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="description" content=""/>
+		<meta name="author" content=""/>
+
+		<!-- Le styles -->
+		<link href="../../static/scripts/OpenLayers-2.12/theme/dark/style.css" rel="stylesheet" type="text/css"
+            th:href="@{/static/scripts/OpenLayers-2.12/theme/dark/style.css}"/>
+			
+		<script src="../../static/scripts/jquery-1.9.1.js"
+			th:src="@{/static/scripts/jquery-1.9.1.js}"></script>	
+			
+		<script type="text/javascript">
+			
+			function initMap(){
+				var options = {
+					projection: new OpenLayers.Projection("EPSG:900913"),
+					displayProjection: new OpenLayers.Projection("EPSG:4326"),
+					units: 'degrees',
+					theme: null
+				};
+
+				//OpenLayers.Util.onImageLoadErrorColor = 'transparent';
+				map = new OpenLayers.Map('map',options);
+				
+				osm_layer = new OpenLayers.Layer.OSM("Simple OSM Map");
+				wms_osm =	new OpenLayers.Layer.WMS("OSM WMS Layer","http://129.206.228.72/cached/osm?",
+						{layers: "osm_auto:all",format: "image/png"});
+				wms_ktimatologio =	new OpenLayers.Layer.WMS("Ktimatologio WMS Layer","http://gis.ktimanet.gr/wms/wmsopen/wmsserver.aspx",
+						{layers: "KTBASEMAP",format: "image/png"});
+				wms_layer = new OpenLayers.Layer.WMS("Tracks","http://localhost:9090/geoserver/gpxClone/wms",
+						{layers: "gpxClone:Tracks",transparent: "true",format: "image/png"},{isBaseLayer: false});
+				wms_local = new OpenLayers.Layer.WMS("Local Tracks","trails/wms",
+						{layers: "gpxClone:Tracks",transparent: "true",format: "image/png"},{isBaseLayer: false});
+				wms_baselayer = new OpenLayers.Layer.WMS("Tracks Base layer","http://localhost:9090/geoserver/gpxClone/wms",
+						{layers: "gpxClone:projTracks",format: "image/png"});
+				
+				
+				map.addLayer(wms_layer);
+				//map.addLayer(wms_local);
+				//map.addLayer(wms_osm);
+				map.addLayer(osm_layer);
+				map.addLayer(wms_ktimatologio)
+					
+				map.addControl( new OpenLayers.Control.LayerSwitcher() );
+				map.addControl( new OpenLayers.Control.MousePosition({div:document.getElementById('position')}) );
+				map.addControl( new OpenLayers.Control.Scale(document.getElementById('scale'),null) );
+				map.setCenter(
+					new OpenLayers.LonLat(23.1507915,38.9543983).transform(
+						new OpenLayers.Projection("EPSG:4326"),map.getProjectionObject()),
+					12);     
+			}
+
+			function RecenterMap(responseXML) {
+				var latitude = $("place", responseXML).attr("lat");
+				var longitude = $("place", responseXML).attr("lon");
+				
+				
+				var proj = new OpenLayers.Projection("EPSG:4326");
+				var point = new OpenLayers.LonLat(longitude, latitude);
+				map.setCenter(point.transform(proj, map.getProjectionObject()));
+			}
+
+
+			var ajaxNominatimOptions =
+				{
+					dataType: 'xml',
+					success: RecenterMap
+				};
+
+			$(document).ready(function(){
+				initMap();
+				
+				$("#map").height($(window).height()-200)
+				$(window).resize(function() {
+					$("#map").height($(window).height()-200)
+				});
+				
+				$('#nominatim').ajaxForm(ajaxNominatimOptions);
+			}); 
+		</script>
+
+	</head>
+
+	<body>
+		
+		<div class="container">
+		
+					<div id="map"/>
+					<div id="position">Position</div>
+					<div id="scale"></div>
+
+		</div> <!-- /container -->
+		
+		<!-- Le javascript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+
+		
+		<script src="../../static/scripts/OpenLayers-2.12/OpenLayers.js"
+            th:src="@{/static/scripts/OpenLayers-2.12/OpenLayers.js}"></script>
+
+		
+	</body>
+</html>

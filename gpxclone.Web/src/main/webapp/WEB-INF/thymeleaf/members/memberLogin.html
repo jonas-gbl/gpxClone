@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+
+Name       : Republic  
+Description: A two-column, fixed-width design with dark color scheme.
+Version    : 1.0
+Released   : 20090910
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	  
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>gpxClone by Me</title>
+    <link href="../../static/css/styleMap.css" rel="stylesheet" type="text/css" media="screen"
+            th:href="@{/static/css/styleMap.css}"/>
+    <script src="../../static/scripts/jquery-1.9.1.js"
+            th:src="@{/static/scripts/jquery-1.9.1.js}"></script>
+</head>
+	
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <div id="logo">
+                <h1><a href="#">gpxClone   </a></h1>
+                <p> a clone of <a href="http://www.gpsies.com">gpsies.com</a></p>
+            </div>
+        </div>
+        <!-- end #header -->
+        <div id="menu">
+            <ul>
+                <li><a href="../home/map.html" th:href="@{/}">Map</a></li>
+                <li><a href="../trails/uploadForm.html" th:href="@{/trails/upload}">Upload Trails</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Links</a></li>
+				
+                <li sec:authorize="!isAuthenticated()" class="userAction">
+                    <a th:href="@{/members/new}" href="../members/memberForm.html">Register</a>
+                </li>
+                <li sec:authorize="!isAuthenticated()" class="userAction">
+                    <a href="../members/memberLogin.html" th:href="@{/members/login}">Log In</a>
+                </li>
+
+
+                <li sec:authorize="isAuthenticated()" class="userAction">
+                    <a href="../home/map.html" th:href="@{/j_spring_security_logout}">Log Out</a>
+                </li>			
+                <li sec:authorize="isAuthenticated()" id="greeting">
+                        <div>Hello, <span sec:authentication="name">John Doe</span></div>
+                </li>
+            </ul>
+        </div>
+        <!-- end #menu -->
+        <div id="page">
+        <div id="page-bgtop">
+        <div id="page-bgbtm">
+            <div id="content">
+                <div class="post">
+                    <h2 class="title"><a href="#">Log In</a></h2>
+                    <p>Use the form below to log in.</p>
+
+                    <form th:action="@{/j_spring_security_check}" method="post">
+                        <table id="form_table">
+                            <tr>
+                                    <td class="form-desc">UserName:</td>
+                                    <td><input class="form-text" type="text" name="j_username" required="required"/></td>
+                            </tr>
+
+                            <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+
+                            <tr>
+                                <td class="form-desc">Password:</td>
+                                <td><input class="form-text" type="password" name="j_password" required="required"/></td>						
+                            </tr>
+							<tr>
+								<td/>
+								<td>
+									<input id="remember_me" name="_spring_security_remember_me" tabindex="3" type="checkbox" checked="checked" />
+									<label for="remember_me">Remember me</label>
+								</td>
+							</tr>
+                            <tr>
+                                <td></td>
+                                <td align="right"><br/><input id="form-submit" type="submit" value="Log In" /></td>
+                            </tr>
+                        </table>			
+                    </form>
+                    <div style="clear: both;">&nbsp;</div>
+                    <div style="clear: both;">&nbsp;</div>
+                </div>
+            </div>
+            <div style="clear: both;">&nbsp;</div>
+        </div>
+        </div>
+        </div>
+        <!-- end #page -->
+    </div>
+</body>
+</html>

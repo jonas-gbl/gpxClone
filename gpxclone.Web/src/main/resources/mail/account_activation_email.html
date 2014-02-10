@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:remove="all">Template for HTML email (simple)</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <p th:text="#{greeting(${username})}">
+            Hello, Peter Static!
+        </p>
+        
+		<p>
+            You have been successfully subscribed to the <b>gpxClone</b> on
+            <span th:text="${#dates.format(subscriptionDate)}">28-12-2012</span>
+        </p>
+
+        <p>Please click on this <a href="#" th:href="${activationLink}">link</a> to activate your new account.</p>
+
+        <p>
+            Regards, <br />
+            &emsp; <em>The Administrator</em>
+        </p>
+    </body>
+</html>

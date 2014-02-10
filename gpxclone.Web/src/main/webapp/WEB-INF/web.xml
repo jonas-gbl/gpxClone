@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+    <display-name>gpxClone Web Application</display-name>
+
+    <!-- Used from ContextLoadListener -->
+    <context-param>
+        <!-- Location of the application-wide spring context xml config-->
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/applicationContext.xml</param-value>
+    </context-param>
+    
+    <!-- Loading the application wide spring context-->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+
+    </listener>
+
+    <servlet>
+            <servlet-name>dispatcherServlet</servlet-name>
+            <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+            <!-- Location of the servlet-specific spring context xml confit-->
+            <init-param>
+                <param-name>contextConfigLocation</param-name>
+                <param-value>classpath:spring/servletContext.xml</param-value>
+            </init-param>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>wms_proxy</servlet-name>
+        <servlet-class>com.jsos.httpproxy.HttpProxyServlet</servlet-class>
+        <init-param>
+            <param-name>host</param-name>
+            <param-value>http://localhost:9090/geoserver/</param-value>
+        </init-param>
+        <init-param>
+            <param-name>gzip</param-name>
+            <param-value>false</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>osm_proxy</servlet-name>
+        <servlet-class>com.jsos.httpproxy.HttpProxyServlet</servlet-class>
+        <init-param>
+            <param-name>host</param-name>
+            <param-value>http://129.206.228.72/cached/osm</param-value>
+        </init-param>
+        <init-param>
+            <param-name>gzip</param-name>
+            <param-value>false</param-value>
+        </init-param>
+    </servlet> 
+    
+    <servlet-mapping>
+        <servlet-name>wms_proxy</servlet-name>
+        <url-pattern>/wms_proxy/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>osm_proxy</servlet-name>
+        <url-pattern>/osm_proxy</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+</web-app>
