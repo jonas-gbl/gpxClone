@@ -24,8 +24,8 @@
         <bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
             <property name="driverClassName" value="org.postgresql.Driver"/>
             <property name="url" value="jdbc:postgresql://localhost:5432/gpxCloneDB"/>
-            <property name="username" value="postgres"/>
-            <property name="password" value="232629"/>
+            <property name="username" value="${postgres.username}"/>
+            <property name="password" value="${postgres.password}"/>
         </bean>
         
         <bean id="hbSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -91,7 +91,7 @@
             </property>
         </bean>
         
-        <bean id="proxyService" class="net.somewhere.gpxclone.services.WmsProxyService2">
+        <bean id="proxyService" class="net.somewhere.gpxclone.services.WmsProxyService">
             <property name="host" value="localhost"/>
             <property name="port" value="9090"/>
             <property name="path" value="/geoserver/gpxClone/wms"/>

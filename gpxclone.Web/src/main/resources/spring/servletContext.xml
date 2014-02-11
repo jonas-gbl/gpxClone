@@ -36,9 +36,5 @@
         <!-- Maximum file size: 5MB -->
         <property name="maxUploadSize" value="5242880"/>
     </bean>
-    
-    <bean id="proxyProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-        <property name="location"  value="classpath:NoodleResources.properties"/>
-    </bean>
-	
+    	
 </beans>
