@@ -228,6 +228,7 @@ public class WmsProxyService implements ProxyService {
             while(requestHeaderNames.hasMoreElements())
             {
                 currentHeaderName=requestHeaderNames.nextElement();
+                //To be Fixed: Encoding-Issues
                 if (currentHeaderName.equals("accept-encoding"))
                 {
                     continue;
