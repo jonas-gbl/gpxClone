@@ -6,7 +6,7 @@ package net.somewhere.gpxclone.controllers;
 
 
 import javax.validation.Valid;
-import net.somewhere.gpxclone.services.UserAlreadyExistsException;
+import net.somewhere.gpxclone.utils.UserAlreadyExistsException;
 import net.somewhere.gpxclone.services.UserService;
 import net.somewhere.gpxclone.utils.memberForm;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,6 @@
 package net.somewhere.gpxclone.services;
 
+import net.somewhere.gpxclone.utils.UserAlreadyExistsException;
 import java.util.Collection;
 import net.somewhere.gpxclone.entities.*;
 
