@@ -74,6 +74,9 @@
 			
 			<form class="form-signin" action="../home/bt_map.html" th:action="@{/j_spring_security_check}" method="post">
 				<legend>Please sign in</legend>
+                                <div th:if="${param.error}" class="alert alert-error">    
+                                    Invalid username and password.
+                                </div>
 				<input type="text" class="input-block-level" placeholder="Username" name="j_username" required="required"/>
 				<input type="password" class="input-block-level" placeholder="Password" name="j_password" required="required"/>
 				<label class="checkbox">

@@ -1,4 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" path="/gpxclone">
-    <Resource auth="Container" driverClassName="org.postgresql.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/gpxCloneDB" password="232629" type="javax.sql.DataSource" url="jdbc:postgresql://127.0.0.1:5432/gpxCloneDB" username="postgres"/>
 </Context>

@@ -20,8 +20,7 @@
         http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm.xsd">
 
                 
-        <jee:jndi-lookup id="dataSource" jndi-name="jdbc/gpxCloneDB"/>
-        <bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <bean id="postgresDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
             <property name="driverClassName" value="org.postgresql.Driver"/>
             <property name="url" value="jdbc:postgresql://localhost:5432/gpxCloneDB"/>
             <property name="username" value="${postgres.username}"/>
@@ -29,7 +28,7 @@
         </bean>
         
         <bean id="hbSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-            <property name="dataSource" ref="myDataSource"/>
+            <property name="dataSource" ref="postgresDataSource"/>
             <property name="packagesToScan" value="net.somewhere.gpxclone.entities"/>
             <property name="hibernateProperties">
                 <props>
@@ -92,10 +91,10 @@
         </bean>
         
         <bean id="proxyService" class="net.somewhere.gpxclone.services.WmsProxyService">
-            <property name="host" value="localhost"/>
-            <property name="port" value="9090"/>
-            <property name="path" value="/geoserver/gpxClone/wms"/>
-            <property name="layer" value="gpxClone:Tracks"/>
+            <property name="host" value="${geoserver.host}"/>
+            <property name="port" value="${geoserver.port}"/>
+            <property name="path" value="${geoserver.path}"/>
+            <property name="layer" value="${geoserver.layer}"/>
             <property name="username" value="${geoserver.username}"/>
             <property name="password" value="${geoserver.password}"/>
         </bean>

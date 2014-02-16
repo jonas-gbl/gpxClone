@@ -44,14 +44,14 @@
 								<li role="presentation">
 									<a role="menuitem" tabindex="-1" href="../trails/bt_uploadForm.html" th:href="@{/trails/upload}">Upload Trail</a>
 								</li>
-								<li role="presentation"><a role="menuitem" tabindex="-1" href="#anotherAction">List Trails</a></li>
+								<!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#anotherAction">List Trails</a></li>-->
 							  </ul>
 							</li>
 							
 							<li><a href="#contact">Contact</a></li>
 						</ul>
 						
-						<form id="nominatim" class="navbar-search pull-left" action=" http://nominatim.openstreetmap.org/search" method="GET">
+						<form id="nominatim" class="navbar-search pull-left" action="http://nominatim.openstreetmap.org/search" method="GET">
 							<input name="q" type="text" class="search-query" placeholder="Find place"/>							
 							<input type="hidden" name="format" value="xml"/>
 							<input type="hidden" name="limit" value="1"/>
@@ -80,46 +80,54 @@
 		</div>
 		<div class="container">
 		
-		<div class="row">
-			<div class="span5 offset1" id="map_description">
+		<div id="title_row" class="row">
+			<div class="span5" id="map_description">
 				<h2 style="margin:auto;">Welcome to gpxClone!</h2>
 				<p style="margin:auto;">This my personal pet project. My aim is to create a clone 
 					<a href="http://www.gpsies.com">gpsies.com</a>.
 				</p>
 			</div>
-		</div>
-		
-			<div class="row">
-				<div class="span3" id="map_info">
+			<div class="span3 offset4" id="map_info">
+
+					<div class="row">
+						<div class="span3" id="feature_info">
+							<!--
+								<table class="table table-condensed">
+									<thead>
+										<tr>
+											<th>trackID</th>
+											<th>Owner</th>
+											<th>Type</th>
+											<th>Public</th>
+										</tr>
+									</thead>
+									
+									<tbody>
+										<tr>
+											<td>trackID</td>
+											<td>Owner</td>
+											<td>Type</td>
+											<td>Public</td>
+										</tr>							
+									</tbody>
+								</table>-->	
+						</div>
+					</div>
+					<div class="row">
+					<div class="span3">
 					<div class="pull-right" id="position"><small>Position</small></div>
 					<div class="pull-left" id="scale"><small>Scale</small></div>
-					<p id="feature_info">
-					<!--
-					    <table class="table table-condensed">
-							<thead>
-								<tr>
-									<th>trackID</th>
-									<th>Owner</th>
-									<th>Type</th>
-									<th>Public</th>
-								</tr>
-							</thead>
-							
-							<tbody>
-								<tr>
-									<td>trackID</td>
-									<td>Owner</td>
-									<td>Type</td>
-									<td>Public</td>
-								</tr>							
-							</tbody>
-						</table>-->						
-					</p>
+					</div>
+					</div>
 				</div>
-				<div class="span8" id="map_container">
-					<div id="map"/>
-				</div>
+		</div>
+		
+		<div class="row">
+			<div class="span12" id="map_container">
+				<div id="map"/>
 			</div>
+		</div>
+				
 
 		</div> <!-- /container -->
 		
@@ -132,8 +140,8 @@
 			th:src="@{/static/bootstrap/js/bootstrap.js}"></script>
 		<script src="../../static/scripts/OpenLayers-2.12/OpenLayers.js"
             th:src="@{/static/scripts/OpenLayers-2.12/OpenLayers.js}"></script>
-		<script src="../../static/scripts/jqMapOSM2.js"
-            th:src="@{/static/scripts/jqMapOSM2.js}"></script>
+		<script src="../../static/scripts/jqMap.js"
+            th:src="@{/static/scripts/jqMap.js}"></script>
 		<script src="../../static/scripts/jquery.form.js"
             th:src="@{/static/scripts/jquery.form.js}"></script>
 	
