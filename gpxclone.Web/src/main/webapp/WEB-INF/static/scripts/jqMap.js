@@ -10,25 +10,23 @@ function initMap(){
 	map = new OpenLayers.Map('map',options);
 	
 	osm_layer = new OpenLayers.Layer.OSM("Simple OSM Map");
-	wms_ktimatologio =	new OpenLayers.Layer.WMS("Ktimatologio WMS Layer","http://gis.ktimanet.gr/wms/wmsopen/wmsserver.aspx",
-            {layers: "KTBASEMAP",format: "image/png"});
-	wms_local = new OpenLayers.Layer.WMS("Local Tracks","trails/wms",
-            {layers: "gpxClone:Tracks",transparent: "true",format: "image/png"},{isBaseLayer: false});
+	cph_ticket_stats_wms = new OpenLayers.Layer.WMS("mTickets Stats","http://localhost:9090/geoserver/Unwire/wms",
+            {layers: "Unwire:cph_ticket_stats",transparent: "true",format: "image/png"},{isBaseLayer: false});
+	cph_tickets_wms = new OpenLayers.Layer.WMS("mTickets","http://localhost:9090/geoserver/Unwire/wms",
+            {layers: "Unwire:geoserver_tickets",transparent: "true",format: "image/png"},{isBaseLayer: false});
 
-	
-	
-
-	map.addLayer(wms_local);
 	map.addLayer(osm_layer);
-	map.addLayer(wms_ktimatologio);
+	map.addLayer(cph_ticket_stats_wms);
+	map.addLayer(cph_tickets_wms);
 		
 	map.addControl( new OpenLayers.Control.LayerSwitcher() );
 	map.addControl( new OpenLayers.Control.MousePosition({div:document.getElementById('position')}) );
 	map.addControl( new OpenLayers.Control.Scale(document.getElementById('scale'),null) );
 	map.setCenter(
-		new OpenLayers.LonLat(23.1507915,38.9543983).transform(
+		new OpenLayers.LonLat(12.5700724,55.6867243).transform(
 			new OpenLayers.Projection("EPSG:4326"),map.getProjectionObject()),
 		12);
+	map.zoomToScale(500000,false);
 
 
 	map.events.register('click', map, function (e) {
@@ -40,17 +38,17 @@ function initMap(){
 			BBOX: map.getExtent().toBBOX(),
 			SERVICE: "WMS",
 			INFO_FORMAT: 'text/html',
-			QUERY_LAYERS: map.layers[0].params.LAYERS,
+			QUERY_LAYERS: map.layers[1].params.LAYERS,
 			FEATURE_COUNT: 50,
-			Layers: 'gpxClone:Tracks',
+			Layers: 'Unwire:cph_ticket_stats',
 			WIDTH: map.size.w,
 			HEIGHT: map.size.h,
 			format: 'image/png',
-			styles: map.layers[0].params.STYLES,
-			srs: map.layers[0].params.SRS};
+			styles: map.layers[1].params.STYLES,
+			srs: map.layers[1].params.SRS};
 			
 		// handle the wms 1.3 vs wms 1.1 madness
-		if(map.layers[0].params.VERSION == "1.3.0") {
+		if(map.layers[1].params.VERSION == "1.3.0") {
 			wms_params.version = "1.3.0";
 			wms_params.j = parseInt(e.xy.x);
 			wms_params.i = parseInt(e.xy.y);
@@ -61,7 +59,7 @@ function initMap(){
 		}
 			
 		var get_config = {
-			url: "http://localhost:8080/gpxclone/trails/wms",
+			url: "http://localhost:9090/geoserver/Unwire/wms",
 			params: wms_params,
 			callback: setHTML
 		};
