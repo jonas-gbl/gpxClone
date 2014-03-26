@@ -9,7 +9,6 @@ background-color: #f5f5f5;
 background-image: url('../../static/images/unwire_logomark.jpg'),url('../../static/images/unwire_logomark_corner.jpg');
 background-position: left top, bottom right; /*Positioning*/
 background-repeat: no-repeat, no-repeat; /*Prevent showing multiple background images*/
-
 }
 
 #unwire_brand { padding: 5px 20px;}

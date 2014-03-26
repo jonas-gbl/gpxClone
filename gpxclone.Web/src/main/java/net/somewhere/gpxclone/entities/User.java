@@ -8,23 +8,25 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -37,7 +39,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author Jonas
  */
 @Entity
-@Table(name = "`Users`", catalog = "`gpxCloneDB`", schema = "`public`")
+@Table(name = "`Users`", catalog = "`mTicketLocationDB`", schema = "`public`")
 public class User implements Serializable, UserDetails {
     private static final long serialVersionUID = 1L;
     @Id
@@ -83,7 +85,7 @@ public class User implements Serializable, UserDetails {
     //@ManyToMany(mappedBy = "usersCollection")
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name="`UsersInRoles`",
-            joinColumns = { 
+            joinColumns = {
 			@JoinColumn(name = "`pId`")},
             inverseJoinColumns = {
                         @JoinColumn(name = "`Rolename`") })
@@ -100,13 +102,13 @@ public class User implements Serializable, UserDetails {
     public User() {
         this.approved=false;
         this.lockedOut=true;
-        this.onLine=false;        
+        this.onLine=false;
     }
 
     public User(Integer pId) {
         this.approved=false;
         this.lockedOut=true;
-        this.onLine=false; 
+        this.onLine=false;
         
         this.pId = pId;
     }
@@ -114,7 +116,7 @@ public class User implements Serializable, UserDetails {
     public User(Integer pId, String username, String passwordHash) {
         this.approved=false;
         this.lockedOut=true;
-        this.onLine=false; 
+        this.onLine=false;
         this.pId = pId;
         
         this.username = username;
@@ -122,7 +124,7 @@ public class User implements Serializable, UserDetails {
     }
 
     public Integer getPId() {
-        return pId;
+        return this.pId;
     }
 
     public void setPId(Integer pId) {
@@ -131,7 +133,7 @@ public class User implements Serializable, UserDetails {
 
     @NotEmpty(message="This may not be empty, for sure!")
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     public void setUsername(String username) {
@@ -141,7 +143,7 @@ public class User implements Serializable, UserDetails {
     @Email
     @NotEmpty
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -150,7 +152,7 @@ public class User implements Serializable, UserDetails {
     
     @NotEmpty
     public String getPassword() {
-        return passwordHash;
+        return this.passwordHash;
     }
 
     public void setPassword(String passwordHash) {
@@ -158,7 +160,7 @@ public class User implements Serializable, UserDetails {
     }
     
     public String getActivationKey() {
-        return activationKey;
+        return this.activationKey;
     }
 
     public void setActivationKey(String ActivationKey) {
@@ -167,7 +169,7 @@ public class User implements Serializable, UserDetails {
 
     @NotEmpty
     public String getPasswordQuestion() {
-        return passwordQuestion;
+        return this.passwordQuestion;
     }
 
     public void setPasswordQuestion(String passwordQuestion) {
@@ -176,7 +178,7 @@ public class User implements Serializable, UserDetails {
     
     @NotEmpty
     public String getPasswordAnswer() {
-        return passwordAnswer;
+        return this.passwordAnswer;
     }
     
     @NotEmpty
@@ -185,11 +187,11 @@ public class User implements Serializable, UserDetails {
     }
 
     public Boolean IsApproved() {
-        return approved;
+        return this.approved;
     }
     
     public Boolean getApproved() {
-        return approved;
+        return this.approved;
     }
     
     public void setApproved(Boolean status) {
@@ -197,7 +199,7 @@ public class User implements Serializable, UserDetails {
     }
 
     public Date getLastActivityDate() {
-        return lastActivityDate;
+        return this.lastActivityDate;
     }
 
     public void setLastActivityDate(Date lastActivityDate) {
@@ -205,7 +207,7 @@ public class User implements Serializable, UserDetails {
     }
 
     public Date getLastLoginDate() {
-        return lastLoginDate;
+        return this.lastLoginDate;
     }
 
     public void setLastLoginDate(Date lastLoginDate) {
@@ -213,7 +215,7 @@ public class User implements Serializable, UserDetails {
     }
 
     public Date getLastPasswordChangedDate() {
-        return lastPasswordChangedDate;
+        return this.lastPasswordChangedDate;
     }
 
     public void setLastPasswordChangedDate(Date lastPasswordChangedDate) {
@@ -221,7 +223,7 @@ public class User implements Serializable, UserDetails {
     }
 
     public Date getCreationDate() {
-        return creationDate;
+        return this.creationDate;
     }
 
     public void setCreationDate(Date creationDate) {
@@ -229,7 +231,7 @@ public class User implements Serializable, UserDetails {
     }
 
     public Boolean IsOnLine() {
-        return onLine;
+        return this.onLine;
     }
 
     public void setOnLine(Boolean isOnLine) {
@@ -237,7 +239,7 @@ public class User implements Serializable, UserDetails {
     }
 
     public Boolean IsLockedOut() {
-        return lockedOut;
+        return this.lockedOut;
     }
 
     public void setLockedOut(Boolean isLockedOut) {
@@ -245,7 +247,7 @@ public class User implements Serializable, UserDetails {
     }
 
     public Collection<Role> getRoles() {
-        return roles;
+        return this.roles;
     }
 
     public void setRoles(Collection<Role> roles) {
@@ -253,7 +255,7 @@ public class User implements Serializable, UserDetails {
     }
 
     public Collection<Trail> getTracksCollection() {
-        return trackCollection;
+        return this.trackCollection;
     }
 
     public void setTracksCollection(Collection<Trail> tracksCollection) {
@@ -262,13 +264,13 @@ public class User implements Serializable, UserDetails {
         
     public void addRole(Role newRole){
         if(this.roles==null){
-            roles=new ArrayList<Role>();
+            this.roles=new ArrayList<Role>();
         }
-        roles.add(newRole);
+        this.roles.add(newRole);
     }
 
     public UserPreferences getUserPreferences() {
-        return userPreferences;
+        return this.userPreferences;
     }
 
     public void setUserPreferences(UserPreferences userPreferences) {
@@ -282,7 +284,7 @@ public class User implements Serializable, UserDetails {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (pId != null ? pId.hashCode() : 0);
+        hash += (this.pId != null ? this.pId.hashCode() : 0);
         return hash;
     }
 
@@ -301,7 +303,7 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public String toString() {
-        return "net.somewhere.gpxclone.entities.Users[ pId=" + pId + " ]";
+        return "net.somewhere.gpxclone.entities.Users[ pId=" + this.pId + " ]";
     }
     
     public boolean hasRole(String roleName) {
@@ -312,7 +314,7 @@ public class User implements Serializable, UserDetails {
             }
         }
         return false;
-    }        
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -322,21 +324,21 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-       return approved;
+       return this.approved;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return !lockedOut;
+        return !this.lockedOut;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return approved;
+        return this.approved;
     }
 
     @Override
     public boolean isEnabled() {
-        return approved;
+        return this.approved;
     }
 }

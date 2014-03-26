@@ -1,6 +1,7 @@
 package net.somewhere.gpxclone.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,14 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 @Entity
-@Table(name = "`UserPreferences`", catalog = "`gpxCloneDB`", schema = "`public`")    
+@Table(name = "`UserPreferences`", catalog = "`mTicketLocationDB`", schema = "`public`")
 public class UserPreferences implements Serializable {
     private static final long serialVersionUID = 1L;
-    @GenericGenerator(name = "generator", strategy = "foreign", 
+    @GenericGenerator(name = "generator", strategy = "foreign",
         parameters = @Parameter(name = "property", value = "user"))
     @Id
     @GeneratedValue(generator = "generator")
@@ -65,7 +67,7 @@ public class UserPreferences implements Serializable {
     }
 
     public Integer getPId() {
-        return pId;
+        return this.pId;
     }
 
     public void setPId(Integer pId) {
@@ -73,7 +75,7 @@ public class UserPreferences implements Serializable {
     }
 
     public String getProfilePolicy() {
-        return profilePolicy;
+        return this.profilePolicy;
     }
 
     public void setProfilePolicy(String profilePolicy) {
@@ -81,7 +83,7 @@ public class UserPreferences implements Serializable {
     }
 
     public String getGender() {
-        return gender;
+        return this.gender;
     }
 
     public void setGender(String gender) {
@@ -89,7 +91,7 @@ public class UserPreferences implements Serializable {
     }
 
     public Boolean getRichEmailFormat() {
-        return richEmailFormat;
+        return this.richEmailFormat;
     }
 
     public void setRichEmailFormat(Boolean richEmailFormat) {
@@ -97,7 +99,7 @@ public class UserPreferences implements Serializable {
     }
 
     public Boolean getMarketingOptIn() {
-        return marketingOptIn;
+        return this.marketingOptIn;
     }
 
     public void setMarketingOptIn(Boolean marketingOptIn) {
@@ -105,7 +107,7 @@ public class UserPreferences implements Serializable {
     }
 
     public String getPhotoImageType() {
-        return photoImageType;
+        return this.photoImageType;
     }
 
     public void setPhotoImageType(String photoImageType) {
@@ -114,7 +116,7 @@ public class UserPreferences implements Serializable {
 
     
     public byte[] getProfilePhoto() {
-        return profilePhoto;
+        return this.profilePhoto;
     }
 
     public void setProfilePhoto(byte[] profilePhoto) {
@@ -122,7 +124,7 @@ public class UserPreferences implements Serializable {
     }
 
     public Integer getBirthYear() {
-        return birthYear;
+        return this.birthYear;
     }
 
     public void setBirthYear(Integer birthYear) {
@@ -130,7 +132,7 @@ public class UserPreferences implements Serializable {
     }
 
     public String getDisplayName() {
-        return displayName;
+        return this.displayName;
     }
 
     public void setDisplayName(String displayName) {
@@ -138,7 +140,7 @@ public class UserPreferences implements Serializable {
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public void setDescription(String description) {
@@ -146,7 +148,7 @@ public class UserPreferences implements Serializable {
     }
 
     public String getCountry() {
-        return country;
+        return this.country;
     }
 
     public void setCountry(String country) {
@@ -154,7 +156,7 @@ public class UserPreferences implements Serializable {
     }
 
     public String getRegion() {
-        return region;
+        return this.region;
     }
 
     public void setRegion(String region) {
@@ -162,7 +164,7 @@ public class UserPreferences implements Serializable {
     }
 
     public User getUser() {
-        return user;
+        return this.user;
     }
 
     public void setUser(User user) {
@@ -172,7 +174,7 @@ public class UserPreferences implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (pId != null ? pId.hashCode() : 0);
+        hash += (this.pId != null ? this.pId.hashCode() : 0);
         return hash;
     }
 
@@ -191,7 +193,7 @@ public class UserPreferences implements Serializable {
 
     @Override
     public String toString() {
-        return "net.somewhere.gpxclone.entities.UserPreferences[ username=" + pId + " ]";
+        return "net.somewhere.gpxclone.entities.UserPreferences[ username=" + this.pId + " ]";
     }
     
 }

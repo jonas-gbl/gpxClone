@@ -6,16 +6,14 @@ package net.somewhere.gpxclone.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
 import org.springframework.security.core.GrantedAuthority;
 
 
@@ -24,7 +22,7 @@ import org.springframework.security.core.GrantedAuthority;
  * @author Jonas
  */
 @Entity
-@Table(name = "`Roles`", catalog = "`gpxCloneDB`", schema = "`public`")
+@Table(name = "`Roles`", catalog = "`mTicketLocationDB`", schema = "`public`")
 public class Role implements Serializable,GrantedAuthority {
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,7 +43,7 @@ public class Role implements Serializable,GrantedAuthority {
     }
 
     public String getRolename() {
-        return rolename;
+        return this.rolename;
     }
 
     public void setRolename(String rolename) {
@@ -53,7 +51,7 @@ public class Role implements Serializable,GrantedAuthority {
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public void setDescription(String description) {
@@ -61,7 +59,7 @@ public class Role implements Serializable,GrantedAuthority {
     }
 
     public Collection<User> getUsersCollection() {
-        return users;
+        return this.users;
     }
 
     public void setUsersCollection(Collection<User> usersCollection) {
@@ -71,7 +69,7 @@ public class Role implements Serializable,GrantedAuthority {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (rolename != null ? rolename.hashCode() : 0);
+        hash += (this.rolename != null ? this.rolename.hashCode() : 0);
         return hash;
     }
 
@@ -90,12 +88,12 @@ public class Role implements Serializable,GrantedAuthority {
 
     @Override
     public String toString() {
-        return "net.somewhere.gpxclone.entities.Roles[ rolename=" + rolename + " ]";
+        return "net.somewhere.gpxclone.entities.Roles[ rolename=" + this.rolename + " ]";
     }
 
     @Override
     public String getAuthority() {
-        return rolename;
+        return this.rolename;
     }
     
 }

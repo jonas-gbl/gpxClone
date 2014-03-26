@@ -26,22 +26,8 @@
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand" id="unwire_brand" href="#"><img src="../../static/images/unwire.jpg"/></a>
+					<a class="brand" id="unwire_brand" href="#" th:href="@{/}"><img src="../../static/images/unwire.jpg" th:src="@{/static/images/unwire.jpg}"/></a>
 					<ul class="nav">
-						<li class="active"><a href="" th:href="@{/}">Map</a></li>
-						<!--
-						<li class="dropdown">
-						  <a id="dropTrails" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-								Trails<b class="caret"></b>
-						  </a>
-						  <ul class="dropdown-menu" role="menu" aria-labelledby="dropTrails">
-							<li role="presentation">
-								<a role="menuitem" tabindex="-1" href="../trails/bt_uploadForm.html" th:href="@{/trails/upload}">Upload Trail</a>
-							</li>
-							
-						  </ul>-->
-						</li>
-						
 						<li><a href="#contact">Contact</a></li>
 					</ul>
 					
@@ -79,8 +65,8 @@
 			<div class="span3 offset4" id="map_info">
 
 					<div class="row">
-						<div class="span3" id="feature_info">
-							<!--
+						<!--<div class="span3" id="feature_info">
+							
 								<table class="table table-condensed">
 									<thead>
 										<tr>
@@ -99,8 +85,8 @@
 											<td>Public</td>
 										</tr>							
 									</tbody>
-								</table>-->	
-						</div>
+								</table>	
+						</div>-->
 					</div>
 					<div class="row">
 					<div class="span3">
@@ -114,6 +100,12 @@
 		<div class="row">
 			<div class="span12" id="map_container">
 				<div id="map"/>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="span12" id="feature_info">
+			
 			</div>
 		</div>
 
